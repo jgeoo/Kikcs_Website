@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
   }
   return <nav>
     <div>
-      <h1 className="Logo" onClick={() => navigate("/MainPage")}>Kicks</h1>
+      <h1 className="Logo" onClick={() => navigate("/main")}>Kicks</h1>
  
     </div>
     <div className="nav-container">

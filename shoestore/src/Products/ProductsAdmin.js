@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import './Products.css';
 import {getFirestore, doc, collection, getDoc} from "firebase/firestore";
 import ProductsView from './ProductsView';
-import Navigation from '../Navigation/Nav';
-import Recommended from '../Recommended/Recommended';
 
-
-function Products(props) {
+function ProductsAdmin(props) {
     const [ProductList, setProductList] = useState();
    
     
@@ -43,9 +40,7 @@ function Products(props) {
     console.log(ProductList)
     
     return (
-     <div>
-        <Navigation/>
-        <Recommended/>
+     
         <div className='card-container'>
         { props.main === true ?  ProductList && ProductList.map((item,index) => 
             <ProductsView key={index} id={index} Name = {item.Name} Price = {item.Price} ImageUrl = {item.ImageUrl}  main={true}/>
@@ -54,7 +49,6 @@ function Products(props) {
         <ProductsView key={index}  id={index} brand={props.brand} Name = {item.Name} handleDelete={props.handleDelete}/>
           )}
         </div>
-     </div>
     );
 }
-export default Products;
+export default ProductsAdmin;

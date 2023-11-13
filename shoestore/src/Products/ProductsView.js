@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getDownloadURL,getStorage, ref } from 'firebase/storage';
 import {getFirestore,updateDoc, doc, collection, getDoc} from "firebase/firestore";
 
-export default function ProductsView({ Name, Price, ImageUrl,admin }) {
+export default function ProductsView({ Name, Price, ImageUrl,main,handleDelete,id,brand }) {
 
     
 
@@ -28,7 +28,7 @@ export default function ProductsView({ Name, Price, ImageUrl,admin }) {
   return (
 
       <section >
-        {admin == false ? 
+        {main === true ? 
         <section className='card'>
         {downloadUrl && <img src={downloadUrl} className='Shoe-img' />}
         <h3 className='card-title'>{Name}</h3>
@@ -37,7 +37,8 @@ export default function ProductsView({ Name, Price, ImageUrl,admin }) {
         :
         <section className='card'>
         <h3 className='card-title'>{Name}</h3>
-        <button >Delete</button>
+        <h3 className='card-title'>{id}</h3>
+        <button onClick={()=>handleDelete(brand,id)}>Delete</button>
         </section>
          } 
       </section>
