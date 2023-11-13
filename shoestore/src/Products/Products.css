@@ -1,0 +1,27 @@
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.card{
+    margin: 20px;
+    border: 2px solid #ededed;
+    padding: 20px;
+    cursor: pointer;
+    width: 16rem;
+    box-sizing: border-box;
+}
+
+.Shoe-img{
+    width: 13rem;
+}
+
+.card-title{
+    margin-bottom: 1rem;
+}
+
+.price{
+    margin-bottom:1rem ;
+    cursor: pointer;
+}
