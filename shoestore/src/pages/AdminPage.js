@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navigation from '../Navigation/Nav.js';
-import { getFirestore, doc, getDoc, updateDoc, collection, addDoc,getDocs,where,query } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc, collection, addDoc,setDoc} from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { v4 } from 'uuid';
 import ProductsAdmin from '../Products/ProductsAdmin.js';
@@ -10,17 +10,17 @@ function AdminPage() {
     const [ShoePrice, setShoePrice] = useState('');
     const [ShoeBrand, setShoeBrand] = useState('');
     const [ShoeImage, setShoeImage] = useState(null);
-
+    
     const ShoesRef = getFirestore();
-
+ 
     const addShoes = async () => {
         const shoeRef = collection(ShoesRef, 'Shoes');
 
         try {
             const brandRef = doc(shoeRef, ShoeBrand);
             const brandDoc = await getDoc(brandRef);
-
             if (brandDoc.exists()) {
+                
                 const productsArray = brandDoc.data().products || [];
                 let imageFileName=null;
                 if(ShoeImage === null)
@@ -46,13 +46,14 @@ function AdminPage() {
                     products: productsArray,
                 });
             } else {
-                
+               
                 const brandRef = doc(shoeRef,ShoeBrand);
-                const brandDoc = await addDoc(brandRef)
-
+                await setDoc(brandRef,{})
+                
+                const brandDoc = await getDoc(brandRef)
                 const productsArray = brandDoc.data().products || [];
                 const imageFileName = `${v4()}_${ShoeImage.name}`;
-
+                
                 const storage = getStorage();
                 const imageRef = ref(storage, `images/${imageFileName}`);
                 await uploadBytes(imageRef, ShoeImage);
@@ -70,7 +71,6 @@ function AdminPage() {
         } catch (e) {
             console.error(e);
         }
-
         setShoeName('');
         setShoePrice('');
         setShoeBrand('');
@@ -105,32 +105,44 @@ function AdminPage() {
     };
 
     return (
+        
         <div>
             <Navigation />
             <h2>Add Product</h2>
-            <label>
-                Product Brand:
-                <input type="text" value={ShoeBrand} onChange={(e) => setShoeBrand(e.target.value)} />
+            <label className='label'>Choose a Shoe Brand:</label>
+            <select value={ShoeBrand} onChange={(e) => setShoeBrand(e.target.value)}>
+                <option value="Jordan">Jordan</option>
+                <option value="Yeezy">Yeezy</option>
+                <option value="Nike">Nike</option>
+                <option value="Adidas">Adidas</option>
+            </select>
+            <label className='label'>
+                Add Another Brand:
+                <input className ='input' type="text" value={ShoeBrand} onChange={(e) => setShoeBrand(e.target.value)} />
             </label>
-            <label>
+            <label  className='label'>
                 Product Name:
-                <input type="text" value={ShoeName} onChange={(e) => setShoeName(e.target.value)} />
+                <input className ='input' type="text" value={ShoeName} onChange={(e) => setShoeName(e.target.value)} />
             </label>
-            <label>
-                Product Price:
-                <input type="text" value={ShoePrice} onChange={(e) => setShoePrice(e.target.value)} />
+            <label  className='label'>
+                Product Price : 
+                <input className ='input' type="text" value={ShoePrice} onChange={(e) => setShoePrice(e.target.value)} />
             </label>
-            <label>
+            <label  className='label'>
                 Product Image:
-                <input type="file" accept="image/*" onChange={handleImageChange} />
+                <input className ='input' type="file" accept="image/*" onChange={handleImageChange} />
             </label>
-            <button onClick={addShoes}>Add Product</button>
+            <button onClick={addShoes} className='button'>Add Product</button>
             <h2>Delete Product</h2>
-            <button>Jordan</button>
-                <ProductsAdmin  brand ="Jordan"handleDelete={handleDelete}/>
-            <button>Yeezy</button>
-                <ProductsAdmin  brand ="Yeezy"handleDelete={handleDelete}/>
-            <button>Delete</button>
+            <h3>Jordan</h3>
+                <ProductsAdmin  brand ="Jordan" handleDelete={handleDelete} />
+            <h3>Yeezy</h3>
+                <ProductsAdmin  brand ="Yeezy" handleDelete={handleDelete}/>
+            <h3>Nike</h3>
+                <ProductsAdmin  brand ="Nike" handleDelete={handleDelete}/>
+            <h3>Adidas</h3>
+                <ProductsAdmin  brand ="Adidas" handleDelete={handleDelete} />
+            
         </div>
     );
 }

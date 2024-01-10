@@ -25,7 +25,7 @@ const SignUp = () => {
         console.log(error);
         return
       });
-      navigate("/")
+      navigate("/main")
     }catch(e){
       console.log(e)
       return

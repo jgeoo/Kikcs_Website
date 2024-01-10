@@ -2,19 +2,21 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    margin-top: 2rem;
+    z-index: -2;
 }
 
 .card{
     margin: 20px;
     border: 2px solid #ededed;
-    padding: 20px;
-    cursor: pointer;
+    padding: 2px;
     width: 16rem;
-    box-sizing: border-box;
+    height: 17rem; 
+    box-sizing: border-box; 
 }
 
 .Shoe-img{
-    width: 13rem;
+    width: 251px;
 }
 
 .card-title{
@@ -24,4 +26,18 @@
 .price{
     margin-bottom:1rem ;
     cursor: pointer;
+}
+.Admin-container{
+    margin:20px;
+    font-family: 'Arial', sans-serif;
+    color: #555;
+
+}
+.label{
+    display:flex;
+    font-family: 'Arial', sans-serif;
+    margin: 10px;
+}
+.input{
+    width:12rem;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Products.css';
-import {getFirestore, doc, collection, getDoc} from "firebase/firestore";
+import {getFirestore, doc, collection, getDoc, getDocs} from "firebase/firestore";
 import ProductsView from './ProductsView';
 import Navigation from '../Navigation/Nav';
 import Recommended from '../Recommended/Recommended';
@@ -9,11 +9,26 @@ import Recommended from '../Recommended/Recommended';
 function Products(props) {
     const [ProductList, setProductList] = useState();
    
-    
     const getProducts = async (brand) => {
         const ShoesRef = getFirestore();
 
         const shoeRef = collection(ShoesRef, "Shoes");
+        if (brand === 'all') {
+            try {
+                const querySnapshot = await getDocs(shoeRef);
+                const allProducts = [];
+
+                querySnapshot.forEach((doc) => {
+                    const products = doc.data().products || [];
+                    allProducts.push(...products);
+                });
+
+                return allProducts;
+            } catch (e) {
+                console.error(e);
+                return [];
+            }
+        } else {
         const brandRef = doc(shoeRef, brand);
     
         try {
@@ -30,8 +45,8 @@ function Products(props) {
             console.error(e);
             return [];
         }
-    };
-    
+    }
+    }
     React.useEffect( ()  =>{
     async function fetchData ()  {
     const products = await getProducts(props.brand);

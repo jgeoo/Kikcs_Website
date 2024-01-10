@@ -4,6 +4,9 @@ import {getFirestore, doc, collection, getDoc} from "firebase/firestore";
 import ProductsView from './ProductsView';
 
 function ProductsAdmin(props) {
+    
+    
+    
     const [ProductList, setProductList] = useState();
    
     
@@ -37,7 +40,7 @@ function ProductsAdmin(props) {
     fetchData()
     },[props.brand])
 
-    console.log(ProductList)
+
     
     return (
      

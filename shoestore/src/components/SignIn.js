@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../config/firebase";
 
 const SignIn = () => {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,9 +22,9 @@ const SignIn = () => {
       console.log(userCredential);
   
       if (email === "adminkicks@gmail.com") {
-        navigate("/Admin");
+        navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/main");
       }
     } catch (error) {
       console.error(error.message);

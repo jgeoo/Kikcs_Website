@@ -35,10 +35,10 @@ export default function ProductsView({ Name, Price, ImageUrl,main,handleDelete,i
         <div className='price'>{Price}</div>
         </section>
         :
-        <section className='card'>
+        <section className='Admin-container'>
         <h3 className='card-title'>{Name}</h3>
         <h3 className='card-title'>{id}</h3>
-        <button onClick={()=>handleDelete(brand,id)}>Delete</button>
+        <button onClick={()=>handleDelete(brand,id)} className='button'>Delete</button>
         </section>
          } 
       </section>
