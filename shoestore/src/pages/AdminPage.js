@@ -1,15 +1,26 @@
+<<<<<<< HEAD
+import React, { useState,useEffect } from 'react';
+import Navigation from '../components/Nav.js';
+import { getFirestore, doc, getDoc, updateDoc, collection, getDocs,setDoc} from 'firebase/firestore';
+=======
 import React, { useState } from 'react';
 import Navigation from '../Navigation/Nav.js';
 import { getFirestore, doc, getDoc, updateDoc, collection, addDoc,setDoc} from 'firebase/firestore';
+>>>>>>> c899b2aa28d0a882ea9c4cfa79aac78e093973b8
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { v4 } from 'uuid';
-import ProductsAdmin from '../Products/ProductsAdmin.js';
+
+import ProductsAdmin from '../components/Products/ProductsAdmin.js';
 
 function AdminPage() {
     const [ShoeName, setShoeName] = useState('');
     const [ShoePrice, setShoePrice] = useState('');
     const [ShoeBrand, setShoeBrand] = useState('');
     const [ShoeImage, setShoeImage] = useState(null);
+<<<<<<< HEAD
+    const [brands, setBrands] = useState([]); 
+=======
+>>>>>>> c899b2aa28d0a882ea9c4cfa79aac78e093973b8
     
     const ShoesRef = getFirestore();
  
@@ -104,6 +115,20 @@ function AdminPage() {
         }
     };
 
+    useEffect(() => {
+        const getFirestoreData = async () => {
+          const querySnapshot = await getDocs(collection(ShoesRef, 'Shoes'));
+          const brandArray = [] 
+          querySnapshot.forEach((doc) => {
+            brandArray.push(doc.id);
+          });
+          setBrands(brandArray)
+        };
+            getFirestoreData();
+      
+        }, []);
+      
+
     return (
         
         <div>
@@ -111,10 +136,19 @@ function AdminPage() {
             <h2>Add Product</h2>
             <label className='label'>Choose a Shoe Brand:</label>
             <select value={ShoeBrand} onChange={(e) => setShoeBrand(e.target.value)}>
+<<<<<<< HEAD
+            <option></option>
+            { brands && brands.map(brand => (
+                <option key={brand} >
+            {brand}
+          </option>
+          ))}
+=======
                 <option value="Jordan">Jordan</option>
                 <option value="Yeezy">Yeezy</option>
                 <option value="Nike">Nike</option>
                 <option value="Adidas">Adidas</option>
+>>>>>>> c899b2aa28d0a882ea9c4cfa79aac78e093973b8
             </select>
             <label className='label'>
                 Add Another Brand:
@@ -134,6 +168,18 @@ function AdminPage() {
             </label>
             <button onClick={addShoes} className='button'>Add Product</button>
             <h2>Delete Product</h2>
+<<<<<<< HEAD
+            <h3></h3>
+            { brands && brands.map(brand => (
+                <div>
+                <h3 key={brand} >
+            {brand}
+          </h3>
+          
+          <ProductsAdmin  brand ={brand} handleDelete={handleDelete} />
+          </div>
+          ))}
+=======
             <h3>Jordan</h3>
                 <ProductsAdmin  brand ="Jordan" handleDelete={handleDelete} />
             <h3>Yeezy</h3>
@@ -143,6 +189,7 @@ function AdminPage() {
             <h3>Adidas</h3>
                 <ProductsAdmin  brand ="Adidas" handleDelete={handleDelete} />
             
+>>>>>>> c899b2aa28d0a882ea9c4cfa79aac78e093973b8
         </div>
     );
 }
